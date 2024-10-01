@@ -162,27 +162,5 @@ final rsa card tab wall
 		, translate rsa_mov $ rsa_cutout rsa wall
 		]
 
-testies:: ℝ3 -> ℝ2 -> ℝ -> SymbolicObj3
-testies card tab wall  
-	= let
-	ncard = V3 (axis card 'x') (axis card 'y') ((axis card 'z') + wall )
-	basic_tab = mk_tab (V3 (tab ^. _x) (tab ^. _y) wall ) wall 
-	x_trans =  ( (axis card 'x') - (tab ^. _x) ) / 2 
-	b_tab = 
-		translate 
-			(V3 x_trans  0 0 )
-			basic_tab
-	u_tab = 
-		translate 
-		( V3 x_trans (wall + (axis card 'y')) wall ) 
-		$ rotate3
-			( V3 (degrees 180) 0 0 )
-			basic_tab
-	in 
-	union 
-	[ b_tab
-	, u_tab
-	]
-
 out = final rsa_token card tab_space wall
 main = writeSTL 0.5 "small.stl" out 
